@@ -1,7 +1,7 @@
 import  { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
 
 interface Info {
@@ -28,7 +28,7 @@ const AdminInfo = () => {
   const [infos, setInfos] = useState<Info[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const navigate = useNavigate();
+  
   const token = localStorage.getItem('token');
 
   useEffect(() => {
