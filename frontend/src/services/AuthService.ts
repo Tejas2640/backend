@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/auth'; // Ensure this matches the backend URL
+const API_URL = 'https://eams-13ws.vercel.app/api/auth'; // Ensure this matches the backend URL
 
 
 const AuthService = {
