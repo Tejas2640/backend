@@ -21,7 +21,7 @@ const Profile = () => {
 
       setLoading(true);
 
-      const res = await axios.get<LeaveRecord[]>("http://localhost:5000/api/leaves", {
+      const res = await axios.get<LeaveRecord[]>("https://eams-2-7uip.onrender.com/api/leaves", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

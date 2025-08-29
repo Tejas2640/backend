@@ -21,8 +21,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       // Check user role and navigate accordingly
       if (res.user.role === 'admin') {
         toast.error('Admin not allowed')
+        return;
       } else {
         onLogin(res.user.id);
+        toast.success('Login Successful')
         navigate('/home'); // Redirect to employee dashboard
       }
     } catch (error) {

@@ -30,7 +30,7 @@ const AdminAttendance = () => {
         }
 
         const headers = { Authorization: `Bearer ${token}` };
-        const response = await axios.get("http://localhost:5000/api/attendance", { headers });
+        const response = await axios.get("https://eams-2-7uip.onrender.com/api/attendance", { headers });
         setAttendanceData(response.data);
       } catch (error: any) {
         console.error("Error fetching attendance data:", error);

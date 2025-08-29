@@ -53,7 +53,7 @@ const AdminInfo = () => {
 
   const fetchInfos = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/info', {
+      const { data } = await axios.get('https://eams-2-7uip.onrender.com/api/info', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInfos(data);
@@ -67,7 +67,7 @@ const AdminInfo = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/info/${id}`, {
+      await axios.delete(`https://eams-2-7uip.onrender.com/api/info/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Deleted successfully!');
@@ -81,7 +81,7 @@ const AdminInfo = () => {
   const handleIncrement = async (id: string, percentage: number) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/info/${id}/increment`,
+        `https://eams-2-7uip.onrender.com/api/info/${id}/increment`,
         { percentage },
         {
           headers: { Authorization: `Bearer ${token}` },

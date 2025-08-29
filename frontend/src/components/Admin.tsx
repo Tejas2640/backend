@@ -37,7 +37,7 @@ const Admin = () => {
 
         const headers = { Authorization: `Bearer ${token}` };
 
-        const attendanceResponse = await axios.get("http://localhost:5000/api/attendance?populate=user", { headers });
+        const attendanceResponse = await axios.get("https://eams-2-7uip.onrender.com/api/attendance?populate=user", { headers });
         const attendanceWithNames = attendanceResponse.data.map((record: any) => ({
           _id: record._id,
           userId: record.userId,
@@ -48,7 +48,7 @@ const Admin = () => {
         }));
         setAttendanceData(attendanceWithNames);
 
-        const leaveResponse = await axios.get("http://localhost:5000/api/leaves", { headers });
+        const leaveResponse = await axios.get("https://eams-2-7uip.onrender.com/api/leaves", { headers });
         setLeaveRequests(leaveResponse.data);
 
       } catch (error: any) {

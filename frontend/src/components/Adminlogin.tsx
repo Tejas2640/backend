@@ -15,6 +15,7 @@ const AdminLogin: React.FC = () => {
       localStorage.setItem('token', res.token);
 
       if (res.user.role === 'admin') {
+         toast.success('Login Successful')
         navigate('/admin');
       } else {
         toast.error('Only admins are allowed to log in here.');

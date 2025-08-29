@@ -34,7 +34,7 @@ const Attendance = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/attendance/${userId}`,
+          `https://eams-2-7uip.onrender.com/api/attendance/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -72,7 +72,7 @@ const Attendance = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/attendance/clock-in",
+        "https://eams-2-7uip.onrender.com/api/attendance/clock-in",
         {}, // No need to send userId (handled in backend)
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -111,7 +111,7 @@ const Attendance = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/attendance/clock-out",
+        "https://eams-2-7uip.onrender.com/api/attendance/clock-out",
         {}, // No need to send userId (handled in backend)
         { headers: { Authorization: `Bearer ${token}` } }
       );
