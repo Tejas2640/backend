@@ -13,9 +13,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ✅ Allowed origins (both deployed + local frontend)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://eams-13ws.vercel.app"
+];
+
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -37,4 +55,6 @@ app.get("/", (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);
