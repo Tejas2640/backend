@@ -13,21 +13,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ CORS setup for multiple origins
-const allowedOrigins = [
-  "http://localhost:5173",           // Local dev frontend
-  process.env.CLIENT_URL             // Deployed frontend (from .env)
-];
+// ✅ Robust CORS setup
+const LOCAL_ORIGIN = "http://localhost:5173";
+const DEPLOYED_ORIGIN = process.env.CLIENT_URL; // Make sure this is set correctly on Render
+const allowedOrigins = [LOCAL_ORIGIN, DEPLOYED_ORIGIN];
 
 app.use(cors({
-  origin: function(origin, callback){
-    // Allow requests with no origin (like Postman or curl)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
+  origin: function(origin, callback) {
+    // Allow requests with no origin (Postman, curl)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is allowed
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error(`CORS policy: Origin ${origin} not allowed`), false);
     }
-    return callback(null, true);
   },
   credentials: true
 }));
