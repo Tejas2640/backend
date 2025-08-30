@@ -19,20 +19,9 @@ const DEPLOYED_ORIGIN = process.env.CLIENT_URL; // Make sure this is set correct
 const allowedOrigins = [LOCAL_ORIGIN, DEPLOYED_ORIGIN];
 
 app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (Postman, curl)
-    if (!origin) return callback(null, true);
-    
-    // Check if origin is allowed
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error(`CORS policy: Origin ${origin} not allowed`), false);
-    }
-  },
+  origin: ["http://localhost:5173", "https://eams-3ojp.vercel.app"], // explicitly allow deployed frontend
   credentials: true
 }));
-
 // Middleware
 app.use(express.json());
 
