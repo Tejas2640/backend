@@ -7,21 +7,29 @@ import attendanceRoutes from "./routes/attendanceRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
-import infoRoutes from "./routes/infoRoutes.js"; // ✅ NEW
+import infoRoutes from "./routes/infoRoutes.js";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Robust CORS setup
+// ✅ Future-proof CORS
 const LOCAL_ORIGIN = "http://localhost:5173";
-const DEPLOYED_ORIGIN = process.env.CLIENT_URL; // Make sure this is set correctly on Render
+const DEPLOYED_ORIGIN = process.env.CLIENT_URL; // must be set on Render
 const allowedOrigins = [LOCAL_ORIGIN, DEPLOYED_ORIGIN];
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://eams-3ojp.vercel.app"], // explicitly allow deployed frontend
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow Postman/curl requests
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);          // allow localhost & deployed frontend
+    } else {
+      return callback(new Error(`CORS policy: Origin ${origin} not allowed`), false);
+    }
+  },
   credentials: true
 }));
+
 // Middleware
 app.use(express.json());
 
@@ -31,7 +39,7 @@ app.use("/api", attendanceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use("/api/employees", employeeRoutes);
-app.use("/api/info", infoRoutes); // ✅ NEW
+app.use("/api/info", infoRoutes);
 
 // MongoDB connection
 mongoose
