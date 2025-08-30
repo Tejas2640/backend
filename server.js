@@ -13,9 +13,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ✅ CORS setup for multiple origins
+const allowedOrigins = [
+  "http://localhost:5173",           // Local dev frontend
+  process.env.CLIENT_URL             // Deployed frontend (from .env)
+];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // Allow requests with no origin (like Postman or curl)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
+
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
